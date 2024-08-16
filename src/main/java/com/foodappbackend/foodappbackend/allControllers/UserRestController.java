@@ -425,7 +425,8 @@ public class UserRestController {
     public String userOrders(@RequestParam String email) {
         System.out.println("email issj........" + email);
         String ans = new RDBMS_TO_JSON().generateJSON("SELECT * FROM orders "
-                + "INNER JOIN cart ON orders.cart_id = cart.cart_id && cart.useremail='" + email + "'"
+                + "INNER JOIN cart ON orders.cart_id = cart.cart_id "
+                + " cart.useremail='" + email + "'"
                 + " ORDER BY orders.created_at DESC ");
 
         return ans;
