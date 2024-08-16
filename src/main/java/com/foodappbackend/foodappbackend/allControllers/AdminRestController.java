@@ -8,6 +8,7 @@ import ch.qos.logback.core.model.Model;
 import com.foodappbackend.foodappbackend.vmm.DBLoader;
 import com.foodappbackend.foodappbackend.vmm.RDBMS_TO_JSON;
 import jakarta.servlet.http.HttpSession;
+import java.io.File;
 import java.io.FileOutputStream;
 import java.sql.ResultSet;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -145,8 +146,9 @@ public class AdminRestController {
             ResultSet rs = DBLoader.executeSQL("SELECT * FROM menu_items");
 
             byte[] b = photo.getBytes();
-            String abspath = "src/main/resources/static/myuploads/";
-            FileOutputStream fos = new FileOutputStream(abspath + oname);
+            String abspath = new File ("src/main/resources/static/myuploads/").getAbsolutePath();
+            File file = new File(abspath + File.separator + oname);
+            FileOutputStream fos = new FileOutputStream(file);
             fos.write(b);
             fos.close();
 
