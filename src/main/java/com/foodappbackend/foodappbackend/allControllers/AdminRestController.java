@@ -272,9 +272,10 @@ public class AdminRestController {
 
     @PostMapping("/showuserorders")
     public String showUserOrders() {
-        String ans = new RDBMS_TO_JSON().generateJSON("SELECT * FROM foodfusion.orders \n"
-                + "                     INNER JOIN foodfusion.cart ON orders.cart_id = cart.cart_id"
+        String ans = new RDBMS_TO_JSON().generateJSON("SELECT * FROM orders "
+                + "INNER JOIN cart ON orders.cart_id = cart.cart_id"
                 + " ORDER BY orders.created_at DESC ");
+     
 
         return ans;
     }
