@@ -15,9 +15,9 @@ public class DBLoader {
 //    "new_password"
 //);
         Connection conn = DriverManager.getConnection(
-                "jdbc:mysql://165.22.211.208:3306/serverdbfood",
-                "jatin",
-                "Str0ngP@ssw0rd!"
+                "jdbc:mysql://localhost:3306/serverdbfood",
+                "jjatin",
+                "NewPass1!"
         );
 
         System.out.println("connection done");
