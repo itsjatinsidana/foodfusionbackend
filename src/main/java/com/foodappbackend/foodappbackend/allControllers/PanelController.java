@@ -83,7 +83,7 @@ public class PanelController {
                 String dbPassword = generateRandomPassword();
 
                 // Create database and user with the generated password
-                Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/", "root", "root_password"); // Update with your root credentials
+                Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/serverdbfood", "jjatin", "NewPass1!"); // Update with your root credentials
                 Statement stmt = conn.createStatement();
 
                 // Create database
