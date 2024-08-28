@@ -90,13 +90,13 @@ public class PanelController {
                 stmt.executeUpdate("CREATE DATABASE " + databasename);
 
                 // Create user and grant privileges
-                String createUserSQL = String.format(
-                        "CREATE USER '%s'@'localhost' IDENTIFIED BY '%s';"
-                        + "GRANT ALL PRIVILEGES ON %s.* TO '%s'@'localhost';"
-                        + "FLUSH PRIVILEGES;",
-                        databasename, dbPassword, databasename, databasename
-                );
-                stmt.executeUpdate(createUserSQL);
+//                String createUserSQL = String.format(
+//                        "CREATE USER '%s'@'localhost' IDENTIFIED BY '';"
+//                        + "GRANT ALL PRIVILEGES ON %s.* TO '%s'@'localhost';"
+//                        + "FLUSH PRIVILEGES;",
+//                        databasename, dbPassword, databasename, databasename
+//                );
+//                stmt.executeUpdate(createUserSQL);
 
                 // Insert panel details into the database
                 rs.moveToInsertRow();
