@@ -22,7 +22,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 @RestController
 //@CrossOrigin(origins = "http://localhost:3000")
-@CrossOrigin(origins = "http://165.22.211.208")
+@CrossOrigin(origins = "http://165.22.211.208,http://localhost:3000")
 
 public class AdminRestController {
 

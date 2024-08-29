@@ -17,7 +17,7 @@ public class DBLoader {
         Connection conn = DriverManager.getConnection(
                 "jdbc:mysql://localhost:3306/serverdbfood",
                 "jjatin",
-                "NewPass1!"
+                "NewOass1!"
         );
 
         System.out.println("connection done");
