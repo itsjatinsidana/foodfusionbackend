@@ -15,7 +15,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.Base64;
-import java.util.List;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -142,41 +141,13 @@ public class PanelController {
                 pstmt.setString(2, password);
                 pstmt.executeUpdate();
 
-//                String nginxConfig = createNginxConfig(domainname);
-//                String nginxConfigPath = "/etc/nginx/sites-available/" + domainname;
-//                Files.write(Paths.get(nginxConfigPath), nginxConfig.getBytes());
-//
-//                // Create a symbolic link to sites-enabled
-//                String enabledPath = "/etc/nginx/sites-enabled/" + domainname;
-//                ProcessBuilder linkBuilder = new ProcessBuilder("ln", "-s", nginxConfigPath, enabledPath);
-//                linkBuilder.start().waitFor();
-//
-//                // Reload Nginx
-//                ProcessBuilder reloadBuilder = new ProcessBuilder("nginx", "-s", "reload");
-//                reloadBuilder.start().waitFor();
-                String defaultConfigPath = "/etc/nginx/sites-available/default";
-                String newConfigPath = "/etc/nginx/sites-available/" + domainname;
-
-                // Read the default configuration
-                List<String> configLines = Files.readAllLines(Paths.get(defaultConfigPath));
-
-                // Modify the server_name and root path for the new domain
-                for (int i = 0; i < configLines.size(); i++) {
-                    if (configLines.get(i).contains("server_name")) {
-                        configLines.set(i, "    server_name " + domainname + ";");
-                    }
-                    if (configLines.get(i).contains("root /var/www/foodfusion/frontend/build;")) {
-                        configLines.set(i, "    root /var/www/" + domainname + "/frontend/build;");
-                    }
-                    // Add other modifications here as needed
-                }
-
-                // Write the modified configuration to the new file
-                Files.write(Paths.get(newConfigPath), configLines);
+                String nginxConfig = createNginxConfig(domainname);
+                String nginxConfigPath = "/etc/nginx/sites-available/" + domainname;
+                Files.write(Paths.get(nginxConfigPath), nginxConfig.getBytes());
 
                 // Create a symbolic link to sites-enabled
                 String enabledPath = "/etc/nginx/sites-enabled/" + domainname;
-                ProcessBuilder linkBuilder = new ProcessBuilder("ln", "-s", newConfigPath, enabledPath);
+                ProcessBuilder linkBuilder = new ProcessBuilder("ln", "-s", nginxConfigPath, enabledPath);
                 linkBuilder.start().waitFor();
 
                 // Reload Nginx
@@ -190,19 +161,19 @@ public class PanelController {
         }
     }
 
-//    private String createNginxConfig(String domainname) {
-//        return "server {\n"
-//                + "    listen 80;\n"
-//                + "    server_name " + domainname + ";\n"
-//                + "    location / {\n"
-//                + "        proxy_pass http://localhost:8080;\n"
-//                + "        proxy_set_header Host $host;\n"
-//                + "        proxy_set_header X-Real-IP $remote_addr;\n"
-//                + "        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;\n"
-//                + "        proxy_set_header X-Forwarded-Proto $scheme;\n"
-//                + "    }\n"
-//                + "}";
-//    }
+    private String createNginxConfig(String domainname) {
+        return "server {\n"
+                + "    listen 80;\n"
+                + "    server_name " + domainname + ";\n"
+                + "    location / {\n"
+                + "        proxy_pass http://localhost:8080;\n"
+                + "        proxy_set_header Host $host;\n"
+                + "        proxy_set_header X-Real-IP $remote_addr;\n"
+                + "        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;\n"
+                + "        proxy_set_header X-Forwarded-Proto $scheme;\n"
+                + "    }\n"
+                + "}";
+    }
 //    @PostMapping("/createpanel")
 //    public String createPanel(
 //            @RequestParam String email,
@@ -343,6 +314,7 @@ public class PanelController {
 //            return ex.toString();
 //        }
 //    }
+
 // Helper method to generate a random password
     private String generateRandomPassword() {
         SecureRandom random = new SecureRandom();
