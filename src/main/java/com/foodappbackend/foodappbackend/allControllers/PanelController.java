@@ -155,8 +155,8 @@ public class PanelController {
                 linkBuilder.start().waitFor();
 
                 // Reload Nginx
-                ProcessBuilder reloadBuilder = new ProcessBuilder("nginx", "-s", "reload");
-                reloadBuilder.start().waitFor();
+//                ProcessBuilder reloadBuilder = new ProcessBuilder("nginx", "-s", "reload");
+//                reloadBuilder.start().waitFor();
                 return "success";
             }
         } catch (Exception ex) {
