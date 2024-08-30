@@ -14,12 +14,10 @@ public class DBLoader {
 //    "jatin",
 //    "new_password"
 //);
-
-     Connection conn = DriverManager.getConnection(
+        Connection conn = DriverManager.getConnection(
                 "jdbc:mysql://localhost:3306/serverdbfood",
                 "jjatin",
-                "NewOass1!"
-
+                "Jatin$123"
         );
 
         System.out.println("connection done");
