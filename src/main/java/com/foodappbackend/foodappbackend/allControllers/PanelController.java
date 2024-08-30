@@ -134,7 +134,7 @@ public class PanelController {
                 rs.insertRow();
 
 //                Connection newDbConn = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/" + domainname, "root", "system");
-                Connection newDbConn = DriverManager.getConnection("jdbc:mysql://localhost:3306/serverdbfood" + domainname, "jjatin", "Jatin$123");
+                Connection newDbConn = DriverManager.getConnection("jdbc:mysql://localhost:3306/" + domainname, "jjatin", "Jatin$123");
                 String insertAdminLoginSQL = "INSERT INTO adminlogin (username, password) VALUES (?, ?)";
                 PreparedStatement pstmt = newDbConn.prepareStatement(insertAdminLoginSQL);
                 pstmt.setString(1, email);
