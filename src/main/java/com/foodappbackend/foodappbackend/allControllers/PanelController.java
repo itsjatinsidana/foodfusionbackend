@@ -68,79 +68,85 @@ public class PanelController {
         return ans;
     }
 
-//   @PostMapping("/createpanel")
-//public String createPanel(
-//        @RequestParam String email,
-//        @RequestParam String password,
-//        @RequestParam String companyname,
-//        @RequestParam String domainname,
-//        @RequestParam String databasename) {
-//
-//    try {
-//        // Check if a panel already exists with the given email
-//        ResultSet rs = DBLoader.executeSQL("SELECT * FROM panels WHERE email ='" + email + "' ");
-//        if (rs.next()) {
-//            return "fail";
-//        } else {
-//            // Generate a random password for the database user
-//            String dbPassword = generateRandomPassword();
-//
-//            // Create database
-//            Connection conn = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/foodfusion", "root", "system"); // Update with your root credentials
-//            Statement stmt = conn.createStatement();
-//            stmt.executeUpdate("CREATE DATABASE " + domainname);
-//
-//            // Path to MySQL and the dump file
-//            String mysqlPath = "C:/Program Files/MySQL/MySQL Server 8.0/bin/mysql.exe";
-//            String dumpFilePath = "C:/Users/user/Documents/dumps/serverdbfood.sql"; // Replace with your actual path
-//
-//            // Command to import the dump file
-//            String[] importCommand = {
-//                mysqlPath,
-//                "-u", "root",
-//                "-psystem",
-//                domainname,
-//                "-e",
-//                "source " + dumpFilePath
-//            };
-//
-//            // Execute the command using ProcessBuilder
-//            ProcessBuilder processBuilder = new ProcessBuilder(importCommand);
-//            processBuilder.redirectErrorStream(true);
-//            Process process = processBuilder.start();
-//
-//            // Wait for the process to complete
-//            int exitCode = process.waitFor();
-//            if (exitCode != 0) {
-//                return "Error importing database dump. Exit code: " + exitCode;
-//            }
-//
-//            // Insert panel details into the database
-//            rs.moveToInsertRow();
-//            rs.updateString("email", email);
-//            rs.updateString("password", password);
-//            rs.updateString("company_name", companyname);
-//            rs.updateString("domain_name", domainname);
-//            rs.updateString("database_name", databasename);
-////            rs.updateString("db_user", databasename); // Assuming database user name is the same as the database name
-////            rs.updateString("db_password", dbPassword);
-//            rs.insertRow();
-//            
-//            Connection newDbConn = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/" + domainname, "root", "system");
-//
-//            
-//               String insertAdminLoginSQL = "INSERT INTO adminlogin (username, password) VALUES (?, ?)";
-//            PreparedStatement pstmt = newDbConn.prepareStatement(insertAdminLoginSQL);
-//            pstmt.setString(1, email);
-//            pstmt.setString(2, password);
-//             pstmt.executeUpdate();
-//
-//            return "success";
-//        }
-//    } catch (Exception ex) {
-//        return ex.toString();
-//    }
-//}
+    @PostMapping("/createpanel")
+    public String createPanel(
+            @RequestParam String email,
+            @RequestParam String password,
+            @RequestParam String companyname,
+            @RequestParam String domainname,
+            @RequestParam String databasename) {
+
+        try {
+            // Check if a panel already exists with the given email
+            ResultSet rs = DBLoader.executeSQL("SELECT * FROM panels WHERE email ='" + email + "' ");
+            if (rs.next()) {
+                return "fail";
+            } else {
+                // Generate a random password for the database user
+                String dbPassword = generateRandomPassword();
+
+                // Create database
+//            Connection conn = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/foodfusion", "root", "system"); 
+                Connection conn = DriverManager.getConnection(
+                        "jdbc:mysql://localhost:3306/serverdbfood",
+                        "jjatin",
+                        "Jatin$123"
+                );
+                Statement stmt = conn.createStatement();
+                stmt.executeUpdate("CREATE DATABASE " + domainname);
+
+                // Path to MySQL and the dump file
+//                String mysqlPath = "C:/Program Files/MySQL/MySQL Server 8.0/bin/mysql.exe";
+//                String dumpFilePath = "C:/Users/user/Documents/dumps/serverdbfood.sql"; 
+                String mysqlPath = "/usr/bin/mysql";
+                String dumpFilePath = "/home/serverdbfood.sql";
+
+                // Command to import the dump file
+                String[] importCommand = {
+                    mysqlPath,
+                    "-u", "root",
+                    "-psystem",
+                    domainname,
+                    "-e",
+                    "source " + dumpFilePath
+                };
+
+                // Execute the command using ProcessBuilder
+                ProcessBuilder processBuilder = new ProcessBuilder(importCommand);
+                processBuilder.redirectErrorStream(true);
+                Process process = processBuilder.start();
+
+                // Wait for the process to complete
+                int exitCode = process.waitFor();
+                if (exitCode != 0) {
+                    return "Error importing database dump. Exit code: " + exitCode;
+                }
+
+                // Insert panel details into the database
+                rs.moveToInsertRow();
+                rs.updateString("email", email);
+                rs.updateString("password", password);
+                rs.updateString("company_name", companyname);
+                rs.updateString("domain_name", domainname);
+                rs.updateString("database_name", databasename);
+//            rs.updateString("db_user", databasename); // Assuming database user name is the same as the database name
+//            rs.updateString("db_password", dbPassword);
+                rs.insertRow();
+
+//                Connection newDbConn = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/" + domainname, "root", "system");
+                Connection newDbConn = DriverManager.getConnection("jdbc:mysql://localhost:3306/serverdbfood" + domainname, "jjatin", "Jatin$123");
+                String insertAdminLoginSQL = "INSERT INTO adminlogin (username, password) VALUES (?, ?)";
+                PreparedStatement pstmt = newDbConn.prepareStatement(insertAdminLoginSQL);
+                pstmt.setString(1, email);
+                pstmt.setString(2, password);
+                pstmt.executeUpdate();
+
+                return "success";
+            }
+        } catch (Exception ex) {
+            return ex.toString();
+        }
+    }
 //    @PostMapping("/createpanel")
 //    public String createPanel(
 //            @RequestParam String email,
