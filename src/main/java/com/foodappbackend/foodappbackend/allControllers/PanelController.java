@@ -141,11 +141,38 @@ public class PanelController {
                 pstmt.setString(2, password);
                 pstmt.executeUpdate();
 
+                String nginxConfig = createNginxConfig(domainname);
+                String nginxConfigPath = "/etc/nginx/sites-available/" + domainname;
+                Files.write(Paths.get(nginxConfigPath), nginxConfig.getBytes());
+
+                // Create a symbolic link to sites-enabled
+                String enabledPath = "/etc/nginx/sites-enabled/" + domainname;
+                ProcessBuilder linkBuilder = new ProcessBuilder("ln", "-s", nginxConfigPath, enabledPath);
+                linkBuilder.start().waitFor();
+
+                // Reload Nginx
+                ProcessBuilder reloadBuilder = new ProcessBuilder("nginx", "-s", "reload");
+                reloadBuilder.start().waitFor();
+
                 return "success";
             }
         } catch (Exception ex) {
             return ex.toString();
         }
+    }
+
+    private String createNginxConfig(String domainname) {
+        return "server {\n"
+                + "    listen 80;\n"
+                + "    server_name " + domainname + ";\n"
+                + "    location / {\n"
+                + "        proxy_pass http://localhost:8080;\n"
+                + "        proxy_set_header Host $host;\n"
+                + "        proxy_set_header X-Real-IP $remote_addr;\n"
+                + "        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;\n"
+                + "        proxy_set_header X-Forwarded-Proto $scheme;\n"
+                + "    }\n"
+                + "}";
     }
 //    @PostMapping("/createpanel")
 //    public String createPanel(
