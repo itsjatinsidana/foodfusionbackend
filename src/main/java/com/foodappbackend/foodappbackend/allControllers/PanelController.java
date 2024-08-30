@@ -13,6 +13,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Base64;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -122,6 +123,9 @@ public class PanelController {
                     return "Error importing database dump. Exit code: " + exitCode;
                 }
 
+                int dbCount = countDatabases(conn);
+                int port = 8081 + dbCount;
+
                 // Insert panel details into the database
                 rs.moveToInsertRow();
                 rs.updateString("email", email);
@@ -141,7 +145,7 @@ public class PanelController {
                 pstmt.setString(2, password);
                 pstmt.executeUpdate();
 
-                String nginxConfig = createNginxConfig(domainname);
+                String nginxConfig = createNginxConfig(domainname, port);
                 String nginxConfigPath = "/etc/nginx/sites-available/" + domainname;
                 Files.write(Paths.get(nginxConfigPath), nginxConfig.getBytes());
 
@@ -153,7 +157,6 @@ public class PanelController {
                 // Reload Nginx
                 ProcessBuilder reloadBuilder = new ProcessBuilder("nginx", "-s", "reload");
                 reloadBuilder.start().waitFor();
-
                 return "success";
             }
         } catch (Exception ex) {
@@ -161,12 +164,22 @@ public class PanelController {
         }
     }
 
-    private String createNginxConfig(String domainname) {
+    private int countDatabases(Connection conn) throws SQLException {
+        Statement stmt = conn.createStatement();
+        ResultSet rs = stmt.executeQuery("SHOW DATABASES");
+        int count = 0;
+        while (rs.next()) {
+            count++;
+        }
+        return count - 1; // Subtracting 1 to exclude the default databases (e.g., information_schema, mysql, performance_schema)
+    }
+
+    private String createNginxConfig(String domainname, int port) {
         return "server {\n"
                 + "    listen 80;\n"
                 + "    server_name " + domainname + ";\n"
                 + "    location / {\n"
-                + "        proxy_pass http://localhost:8080;\n"
+                + "        proxy_pass http://localhost:" + port + ";\n"
                 + "        proxy_set_header Host $host;\n"
                 + "        proxy_set_header X-Real-IP $remote_addr;\n"
                 + "        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;\n"
