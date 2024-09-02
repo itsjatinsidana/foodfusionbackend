@@ -8,7 +8,6 @@ import static com.fasterxml.jackson.databind.jsonFormatVisitors.JsonValueFormat.
 import com.foodappbackend.foodappbackend.vmm.DBLoader;
 import com.foodappbackend.foodappbackend.vmm.RDBMS_TO_JSON;
 
-
 import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
@@ -149,7 +148,7 @@ public class PanelController {
                 String insertAdminLoginSQL = "INSERT INTO adminlogin (username, password) VALUES (?, ?)";
                 PreparedStatement pstmt = newDbConn.prepareStatement(insertAdminLoginSQL);
                 pstmt.setString(1, email);
-                psmt.setString(2, password);
+                pstmt.setString(2, password);
                 pstmt.executeUpdate();
 
                 String nginxConfig = createNginxConfig(domainname, port);
@@ -165,9 +164,8 @@ public class PanelController {
 //                ProcessBuilder reloadBuilder = new ProcessBuilder("nginx", "-s", "reload");
 //                reloadBuilder.start().waitFor();  
                 // Add DNS record using DigitalOcean API
-                
                 String doToken = "dop_v1_025bce7b61133eca58d2f4d434940c67f9648505449be0804727365b85338f59";
-            
+
 //                String doToken = dotenv.get("DO_API_TOKEN");
                 String apiEndpoint = "https://api.digitalocean.com/v2/domains/" + domainname + "/records";
                 String recordData = "{ \"type\": \"A\", \"name\": \"@\", \"data\": \"YOUR_SERVER_IP\", \"ttl\": 1800 }";
@@ -221,146 +219,6 @@ public class PanelController {
                 + "    }\n"
                 + "}";
     }
-//    @PostMapping("/createpanel")
-//    public String createPanel(
-//            @RequestParam String email,
-//            @RequestParam String password,
-//            @RequestParam String companyname,
-//            @RequestParam String domainname,
-//            @RequestParam String databasename) {
-//
-//        try {
-//            // Check if a panel already exists with the given email
-//            ResultSet rs = DBLoader.executeSQL("SELECT * FROM panels WHERE email ='" + email + "' ");
-//            if (rs.next()) {
-//                
-//                return "fail";
-//            } else {
-//                // Generate a random password for the database user
-//                String dbPassword = generateRandomPassword();
-//
-////                Connection conn = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/foodfusion", "root", "system");
-//                Connection conn = DriverManager.getConnection(
-//                        "jdbc:mysql://localhost:3306/serverdbfood",
-//                        "jjatin",
-//                        "NewOass1!"
-//                );
-//                Statement stmt = conn.createStatement();
-//
-//                // Create database
-//                stmt.executeUpdate("CREATE DATABASE " + domainname);
-//
-//                // Determine paths based on environment
-//                String env = System.getenv("ENVIRONMENT"); // Set this environment variable to "development" or "production"
-//                System.out.println("PATH: " + System.getenv("PATH"));
-//
-//                String dumpFilePath;
-//                String nginxFilePath;
-//                if ("development".equals(env)) {
-//                    dumpFilePath = "C:/Users/user/Documents/dumps/serverdbfood.sql";
-//                    nginxFilePath = "C:/path/to/nginx/conf.d/" + domainname + ".conf";
-//                } else {
-//                    dumpFilePath = "/home/serverdbfood.sql";
-//                    nginxFilePath = "/etc/nginx/conf.d/" + domainname + ".conf";
-//                }
-//
-//                // Import the SQL dump into the new database
-//                String[] importCommand = {
-//                    "C:/Program Files/MySQL/MySQL Server 8.0/bin/mysql.exe",
-//                    "-u", "root",
-//                    "-psystem",
-//                    domainname,
-//                    "-e", "source " + dumpFilePath
-//                };
-////                String[] importCommand;
-////                if ("development".equals(env)) {
-////                    importCommand = new String[]{
-////                        "C:/Program Files/MySQL/MySQL Server 8.0/bin/mysql.exe", // Full path to the mysql executable in development
-////                        "-u", "root",
-////                        "-psystem",
-////                        domainname,
-////                        "-e", "source " + dumpFilePath
-////                    };
-////              }
-////                else {
-////                    importCommand = new String[]{
-////                        "/usr/bin/mysql", // Full path to the mysql executable in production (or appropriate path)
-////                        "-u", "root",
-////                        "-psystem",
-////                        domainname,
-////                        "-e", "source " + dumpFilePath
-////                    };
-////                }
-//
-//                ProcessBuilder processBuilder = new ProcessBuilder(importCommand);
-//                Process process = processBuilder.start();
-//                process.waitFor();
-//
-//                // Create a new database user and grant privileges
-////                String createUserSQL = String.format(
-////                        "CREATE USER '%s_user'@'localhost' IDENTIFIED BY '%s';"
-////                        + "GRANT ALL PRIVILEGES ON %s.* TO '%s_user'@'localhost';"
-////                        + "FLUSH PRIVILEGES;",
-////                        domainname, dbPassword, domainname, domainname
-////                );
-////                stmt.executeUpdate(createUserSQL);
-//                String createUserSQL = String.format(
-//                        "CREATE USER '%s_user'@'localhost' IDENTIFIED BY '%s';",
-//                        domainname, dbPassword
-//                );
-//
-//                String grantPrivilegesSQL = String.format(
-//                        "GRANT ALL PRIVILEGES ON %s.* TO '%s_user'@'localhost';",
-//                        domainname, domainname
-//                );
-//
-//                String flushPrivilegesSQL = "FLUSH PRIVILEGES;";
-////                try ( Connection test = DriverManager.getConnection("jdbc:mysql://localhost:3306/foodfusion", "root", "system");  Statement stmttest = test.createStatement()) {
-//                try ( Connection test = DriverManager.getConnection("jdbc:mysql://localhost:3306/serverdbfood", "jjatin", "NewOass1!");  Statement stmttest = test.createStatement()) {
-//
-//                    // Execute the CREATE USER statement
-//                    stmttest.executeUpdate(createUserSQL);
-//                    System.out.println("User created successfully.");
-//
-//                    // Execute the GRANT PRIVILEGES statement
-//                    stmttest.executeUpdate(grantPrivilegesSQL);
-//                    System.out.println("Privileges granted successfully.");
-//
-//                    // Execute the FLUSH PRIVILEGES statement
-//                    stmttest.executeUpdate(flushPrivilegesSQL);
-//                    System.out.println("Privileges flushed successfully.");
-//
-//                }
-//                // Insert panel details into the database
-//                rs.moveToInsertRow();
-//                rs.updateString("email", email);
-//                rs.updateString("password", password);
-//                rs.updateString("company_name", companyname);
-//                rs.updateString("domain_name", domainname);
-//                rs.updateString("database_name", databasename);
-//
-//                rs.insertRow();
-//
-//                // Create and configure Nginx file
-//                String nginxConfigContent = "server {\n"
-//                        + "    listen 80;\n"
-//                        + "    server_name " + domainname + ";\n"
-//                        + "    location / {\n"
-//                        + "        proxy_pass http://localhost:3000;\n"
-//                        + // Update with actual backend port if necessary
-//                        "    }\n"
-//                        + "}";
-//                Files.write(Paths.get(nginxFilePath), nginxConfigContent.getBytes());
-//
-//                // Reload Nginx to apply the new configuration
-//                Runtime.getRuntime().exec("nginx -s reload");
-//
-//                return "success";
-//            }
-//        } catch (Exception ex) {
-//            return ex.toString();
-//        }
-//    }
 
 // Helper method to generate a random password
     private String generateRandomPassword() {
