@@ -167,30 +167,30 @@ public class PanelController {
                 // Add DNS record using DigitalOcean API
                 
 //                String doToken = "dop_v1_025bce7b61133eca58d2f4d434940c67f9648505449be0804727365b85338f59";
-            
-                String doToken = dotenv.get("DO_API_TOKEN");
-                String apiEndpoint = "https://api.digitalocean.com/v2/domains/" + domainname + "/records";
-                String recordData = "{ \"type\": \"A\", \"name\": \"@\", \"data\": \"YOUR_SERVER_IP\", \"ttl\": 1800 }";
-
-                HttpClient client = HttpClient.newHttpClient();
-                HttpRequest request;
-                try {
-                    request = HttpRequest.newBuilder()
-                            .uri(new URI(apiEndpoint)) // Use the URI constructor directly
-                            .header("Authorization", "Bearer " + doToken)
-                            .header("Content-Type", "application/json")
-                            .POST(HttpRequest.BodyPublishers.ofString(recordData))
-                            .build();
-
-                    HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
-
-                    if (response.statusCode() != 201) {
-                        return "Failed to create DNS record: " + response.body();
-                    }
-
-                } catch (Exception e) {
-                    return "Error creating DNS record: " + e.getMessage();
-                }
+//            
+////                String doToken = dotenv.get("DO_API_TOKEN");
+//                String apiEndpoint = "https://api.digitalocean.com/v2/domains/" + domainname + "/records";
+//                String recordData = "{ \"type\": \"A\", \"name\": \"@\", \"data\": \"YOUR_SERVER_IP\", \"ttl\": 1800 }";
+//
+//                HttpClient client = HttpClient.newHttpClient();
+//                HttpRequest request;
+//                try {
+//                    request = HttpRequest.newBuilder()
+//                            .uri(new URI(apiEndpoint)) // Use the URI constructor directly
+//                            .header("Authorization", "Bearer " + doToken)
+//                            .header("Content-Type", "application/json")
+//                            .POST(HttpRequest.BodyPublishers.ofString(recordData))
+//                            .build();
+//
+//                    HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+//
+//                    if (response.statusCode() != 201) {
+//                        return "Failed to create DNS record: " + response.body();
+//                    }
+//
+//                } catch (Exception e) {
+//                    return "Error creating DNS record: " + e.getMessage();
+//                }
                 return "success";
             }
         } catch (Exception ex) {
