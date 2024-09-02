@@ -167,6 +167,8 @@ public class PanelController {
                 String doToken = "dop_v1_025bce7b61133eca58d2f4d434940c67f9648505449be0804727365b85338f59";
 
 //                String doToken = dotenv.get("DO_API_TOKEN");
+
+
                 String apiEndpoint = "https://api.digitalocean.com/v2/domains/" + domainname + "/records";
                 String recordData = "{ \"type\": \"A\", \"name\": \"@\", \"data\": \"YOUR_SERVER_IP\", \"ttl\": 1800 }";
 
