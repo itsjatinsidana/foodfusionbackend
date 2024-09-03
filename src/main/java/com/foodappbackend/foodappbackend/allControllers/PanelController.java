@@ -75,6 +75,12 @@ public class PanelController {
         return ans;
     }
 
+      @GetMapping("/helo")
+    public String Helo() {
+        String ans = "hello";
+        return ans;
+    }
+
     @PostMapping("/createpanel")
     public String createPanel(
             @RequestParam String email,
