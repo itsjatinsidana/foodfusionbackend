@@ -71,6 +71,7 @@
 =======
         
         <dependency>
+<<<<<<< HEAD
     <groupId>io.github.cdimascio</groupId>
     <artifactId>dotenv-java</artifactId>
     <version>2.2.0</version>
@@ -81,6 +82,13 @@
     <version>2.2.0</version>
 </dependency>
 >>>>>>> a7878633b016fa2c4245fe82a6b9a31565946e52
+=======
+            <groupId>io.github.cdimascio</groupId>
+            <artifactId>dotenv-java</artifactId>
+            <version>2.2.0</version>
+        </dependency>
+      
+>>>>>>> e91e8ad5d3e404937e9822ba40fb67d151364171
         <!-- https://mvnrepository.com/artifact/com.googlecode.json-simple/json-simple -->
         <dependency>
             <groupId>com.googlecode.json-simple</groupId>
