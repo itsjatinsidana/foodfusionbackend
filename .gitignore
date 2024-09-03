@@ -28,6 +28,10 @@ target/
 build/
 !**/src/main/**/build/
 !**/src/test/**/build/
+<<<<<<< HEAD
+=======
+.env
+>>>>>>> a7878633b016fa2c4245fe82a6b9a31565946e52
 
 ### VS Code ###
 .vscode/

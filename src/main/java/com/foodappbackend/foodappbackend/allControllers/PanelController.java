@@ -4,8 +4,19 @@
  */
 package com.foodappbackend.foodappbackend.allControllers;
 
+<<<<<<< HEAD
 import com.foodappbackend.foodappbackend.vmm.DBLoader;
 import com.foodappbackend.foodappbackend.vmm.RDBMS_TO_JSON;
+=======
+import static com.fasterxml.jackson.databind.jsonFormatVisitors.JsonValueFormat.URI;
+import com.foodappbackend.foodappbackend.vmm.DBLoader;
+import com.foodappbackend.foodappbackend.vmm.RDBMS_TO_JSON;
+
+import java.net.URI;
+import java.net.http.HttpClient;
+import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
+>>>>>>> a7878633b016fa2c4245fe82a6b9a31565946e52
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.security.SecureRandom;
@@ -156,8 +167,40 @@ public class PanelController {
 
                 // Reload Nginx
 //                ProcessBuilder reloadBuilder = new ProcessBuilder("nginx", "-s", "reload");
+<<<<<<< HEAD
 //                reloadBuilder.start().waitFor();
 
+=======
+//                reloadBuilder.start().waitFor();  
+                // Add DNS record using DigitalOcean API
+//                String doToken = "dop_v1_025bce7b61133eca58d2f4d434940c67f9648505449be0804727365b85338f59";
+//
+////                String doToken = dotenv.get("DO_API_TOKEN");
+//
+//
+//                String apiEndpoint = "https://api.digitalocean.com/v2/domains/" + domainname + "/records";
+//                String recordData = "{ \"type\": \"A\", \"name\": \"@\", \"data\": \"YOUR_SERVER_IP\", \"ttl\": 1800 }";
+//
+//                HttpClient client = HttpClient.newHttpClient();
+//                HttpRequest request;
+//                try {
+//                    request = HttpRequest.newBuilder()
+//                            .uri(new URI(apiEndpoint)) // Use the URI constructor directly
+//                            .header("Authorization", "Bearer " + doToken)
+//                            .header("Content-Type", "application/json")
+//                            .POST(HttpRequest.BodyPublishers.ofString(recordData))
+//                            .build();
+//
+//                    HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+//
+//                    if (response.statusCode() != 201) {
+//                        return "Failed to create DNS record: " + response.body();
+//                    }
+//
+//                } catch (Exception e) {
+//                    return "Error creating DNS record: " + e.getMessage();
+//                }
+>>>>>>> a7878633b016fa2c4245fe82a6b9a31565946e52
                 return "success";
             }
         } catch (Exception ex) {
@@ -188,6 +231,7 @@ public class PanelController {
                 + "    }\n"
                 + "}";
     }
+<<<<<<< HEAD
 //    @PostMapping("/createpanel")
 //    public String createPanel(
 //            @RequestParam String email,
@@ -328,6 +372,8 @@ public class PanelController {
 //            return ex.toString();
 //        }
 //    }
+=======
+>>>>>>> a7878633b016fa2c4245fe82a6b9a31565946e52
 
 // Helper method to generate a random password
     private String generateRandomPassword() {

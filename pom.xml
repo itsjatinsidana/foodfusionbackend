@@ -67,12 +67,30 @@
             <artifactId>mysql-connector-j</artifactId>
             <version>8.3.0</version>
         </dependency>
+<<<<<<< HEAD
+=======
+        
+        <dependency>
+    <groupId>io.github.cdimascio</groupId>
+    <artifactId>dotenv-java</artifactId>
+    <version>2.2.0</version>
+</dependency>
+<dependency>
+    <groupId>io.github.cdimascio</groupId>
+    <artifactId>dotenv-java</artifactId>
+    <version>2.2.0</version>
+</dependency>
+>>>>>>> a7878633b016fa2c4245fe82a6b9a31565946e52
         <!-- https://mvnrepository.com/artifact/com.googlecode.json-simple/json-simple -->
         <dependency>
             <groupId>com.googlecode.json-simple</groupId>
             <artifactId>json-simple</artifactId>
             <version>1.1.1</version>
         </dependency>
+<<<<<<< HEAD
+=======
+       
+>>>>>>> a7878633b016fa2c4245fe82a6b9a31565946e52
     </dependencies>
 
     <build>

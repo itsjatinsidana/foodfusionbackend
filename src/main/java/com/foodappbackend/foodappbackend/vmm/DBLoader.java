@@ -8,7 +8,11 @@ public class DBLoader {
         Class.forName("com.mysql.jdbc.Driver");
         System.out.println("Driver Loading Done");                      //change schema name here
 
+<<<<<<< HEAD
 //         Connection conn = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/foodfusion", "root", "system");
+=======
+//        Connection conn = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/foodfusion", "root", "system");
+>>>>>>> a7878633b016fa2c4245fe82a6b9a31565946e52
 //         Connection conn = DriverManager.getConnection(
 //    "jdbc:mysql://165.22.211.208:3306/serverdbfood",
 //    "jatin",
