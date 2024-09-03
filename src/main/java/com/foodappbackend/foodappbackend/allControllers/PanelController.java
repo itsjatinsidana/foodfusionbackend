@@ -79,12 +79,12 @@ public class PanelController {
         String ans = new RDBMS_TO_JSON().generateJSON("SELECT * FROM panels ORDER BY id DESC");
         return ans;
     }
-
-      @GetMapping("/helo")
-    public String Helo() {
-        String ans = "hello";
-        return ans;
-    }
+//
+//      @GetMapping("/helo")
+//    public String Helo() {
+//        String ans = "hello";
+//        return ans;
+//    }
 
     @PostMapping("/createpanel")
     public String createPanel(
